@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.js"></script>
+    <script>
+        var displayTable=(result)=>{
+            var str="<table border='2'><tr><th>Id</th><th>User Id</th><th>Title</th><th>Body</th></tr>"
+                for(var ob of result){
+                    str+=`<tr>
+                        <td>${ob.id}</td>
+                        <td>${ob.userId}</td>
+                        <td>${ob.title}</td>
+                        <td>${ob.body}</td>
+                        </tr>`
+                }
+                str+="</table>"
+                $('#table').html(str);
+        }
+        const displayDropdown=(result)=>{
+            var str="<select id='uid'>";
+                for(var ob of result){
+                    str+=`<option value=${ob.id}>${ob.title}</option>`
+                }
+                  str+="</select>";
+                  $('#dropdown').html(str);
+            }
+        
+          const displaydetails=(result)=>{
+            str=`Id : ${result.id}<br/>User id: ${result.userId}<br/> title: ${result.title} <br/> body : ${result.body}`
+            $('#showbyid').html(str)
+        }
+
+        $(document).ready(function(){
+            $('#btn1').click(function(){
+                //send the ajax request and execute function assigned to success, if finishes successfully, or executes function assigned to error, if finishes unsuccessfully
+                $.ajax({
+                    async:true,
+                    url:"https://jsonplaceholder.typicode.com/posts",
+                    type:"GET",
+                    success:function(result){
+                         displayTable(result);
+                         displayDropdown(result)
+                    },
+                    error:function(err){
+                        console.log("error occured",err)
+                    }
+
+                })
+            })
+        $('#btn').click(function(){
+            var uidval=$('#uid option:selected').val();
+                //concate the id to generate new url dynamically 
+                var newurl="https://jsonplaceholder.typicode.com/posts/"+uidval
+         //   var newurl="https://jsonplaceholder.typicode.com/posts";
+            $.ajax({
+                async:true,
+                    url:newurl,
+                    type:"GET",
+                success:function(result){
+                    displaydetails(result);
+                },
+                error:function(err){
+                    console.log("error occured",err);
+                }
+            })
+        })
+    })
+    </script>
+</head>
+<body>
+    <div>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur repudiandae dolore facere itaque, nulla architecto obcaecati ipsum voluptatem dolorem dolor deleniti odio ab maxime ex. Magnam labore distinctio expedita consequuntur.
+
+    </div>
+    <button type="button" name="btn" id="btn" value="btn">get by id</button>
+    <button type="button" name="btn" id="btn1" value="btn1">get data</button>
+    <div id="dropdown">
+
+    </div>
+    <div id="showbyid">
+
+    </div>
+    <div id="table">
+
+    </div>
+</body>
+</html>

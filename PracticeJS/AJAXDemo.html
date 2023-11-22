@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #showbyid{
+            border:2px solid red;
+        }
+    </style>
+    <script src="./jquery.js"></script>
+    <script>
+        //converts javascritpi array into table
+        var displayTable=(result)=>{
+            var str="<table border='2'><tr><th>Id</th><th>userId</th><th>title</th><th>body</th></tr>"
+            for(var ob of result){
+                str+=`<tr><td>${ob.id}</td><td>${ob.userId}</td><td>${ob.title}</td><td>${ob.body}</td></tr>`
+            }
+        str+="</table>";
+        $('#table').html(str);
+        
+
+        }
+        //converts javascritpi array into dropsown list
+        const displayDropdown=(result)=>{
+            var str="<select id='uid'>";
+            for(var ob of result){ 
+                str+=`<option value=${ob.id}>${ob.title}</option>`
+            }  
+            str+="</select>";
+            $('#dropdown').html(str);
+        }
+        //converts single object into text
+        const displaydetails=(result)=>{
+            str=`Id : ${result.id}<br/>User id: ${result.userId}<br/> title: ${result.title} <br/> body : ${result.body}`
+            $('#showbyid').html(str)
+        }
+        $(document).ready(function(){
+            //click event to get array of json data using ajax request
+            $('#btn1').click(function(){
+                //send the ajax request and execute function assigned to success, if finishes successfully, or executes function assigned to error, if finishes unsuccessfully
+                $.ajax({
+                    async:true,
+                    url:"https://jsonplaceholder.typicode.com/posts",
+                    type:"GET",
+                    success:function(result){
+                         displayTable(result);
+                         displayDropdown(result)
+                    },
+                    error:function(err){
+                        console.log("error occured",err)
+                    }
+
+                })
+            })
+            $('#btn').click(function(){
+                //select the value of selected option from the dropdown list
+                var uidval=$('#uid option:selected').val();
+                //concate the id to generate new url dynamically 
+                var newurl="https://jsonplaceholder.typicode.com/posts/"+uidval
+                //send ajax request to get data for the given id
+                $.ajax({
+                    async:true,
+                    url:newurl,
+                    type:"GET",
+                    success:function(result){
+                        displaydetails(result);
+                    },
+                    error:function(err){
+                        console.log("error occured",err)
+                    }
+
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias beatae praesentium magni optio eos commodi, officiis corporis, explicabo ipsa mollitia iusto odio, reiciendis magnam! Possimus sapiente deserunt enim eum debitis.
+    </div>
+    
+    <button type="button" name="btn" id="btn" value="btn">get by id</button>
+    <button type="button" name="btn" id="btn1" value="btn1">get data</button>
+    <div id="dropdown">
+
+    </div>
+    <div id="showbyid">
+
+    </div>
+    <div id="table">
+
+    </div>
+    
+</body>
+</html>

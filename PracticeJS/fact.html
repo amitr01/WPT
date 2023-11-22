@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function onaddition(){
+            var n1=parseInt(document.getElementById("num1").value);
+            var n2=parseInt(document.getElementById("num2").value);
+
+            var addition=n1+n2;
+            alert("addition"+addition);
+            document.getElementById("num1").value="";
+            documnet.getElementById("num2").value="";
+            
+        }
+        function onfact(){
+            var n1=parseInt(document.getElementById("num1").value);
+            var ans=1;
+            for(var i=1;i<=n1;i++){
+                 ans=ans*i;
+            }
+            alert("Factorial of number is "+ans);
+            document.getElementById("num1").value="";
+            document.getElementById("num2").value="";
+        }
+    </script>
+</head>
+<body>
+    <form>
+        Number 1: <input type="text" id="num1" name="n1"><br/>
+        Number 2: <input type="text" id="num2" name="n1"><br/>
+        <button type="button" name="btn" id="add" value="addition" onclick="onaddition()">Addition</button>
+        <button type="button" name="btn" id="fact" value="factorial" onclick="onfact()">Factorial</button>
+       
+    </form>
+
+</body>
+</html>
