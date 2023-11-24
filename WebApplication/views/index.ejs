@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+    <h1>Product Management system</h1>
+</header>
+<form action="/insert">
+    <button type="submit" name="add"id="add" value="add" >add new product</button>
+    <button type="submit" name="add" id="Search By Id" value="find">Search Id:</button>
+    <button type="submit" name="add" id="show" value="show">Show Table</button>
+</form>
+
+<table border="2px">
+    <tr>
+        <th>Product Id</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Delete</th>
+    </tr>
+    <% for(var i=0;i<proddata.length;i++) { %>
+        <tr>
+            <td><%=proddata[i].pid %></td>
+            <td><%=proddata[i].pname%></td>
+            <td><%=proddata[i].price%></td>
+            <td><%=proddata[i].qty%></td>
+            <td><a href="/deleteprod/<%=proddata[i].pid%>">delete</a></td>
+        </tr>
+      <%}%>  
+</table>
+
+</body>
+</html>
